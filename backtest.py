@@ -136,16 +136,29 @@ def plot_equity(df: pd.DataFrame, ticker: str, path: Path) -> None:
     plt.close(fig)
 
 
+def ask_ticker() -> str:
+    # ask for the stock. plain NSE symbols get .NS added, blank = Nifty 50
+    t = input("Enter ticker (e.g. TMPV, RELIANCE, ^NSEI) or press Enter for Nifty 50: ").strip().upper()
+    if not t:
+        return "^NSEI"
+    if not t.startswith("^") and "." not in t:
+        t += ".NS"
+    return t
+
+
 # main
 def main() -> None:
     parser = argparse.ArgumentParser(description="Backtest a 50/200 EMA crossover strategy.")
-    parser.add_argument("--ticker", default="^NSEI", help="Yahoo Finance ticker (default: ^NSEI = Nifty 50)")
+    parser.add_argument("--ticker", default=None, help="Yahoo Finance ticker, e.g. TMPV.NS (asks if not given)")
     parser.add_argument("--start", default="2010-01-01", help="Start date YYYY-MM-DD")
     parser.add_argument("--end", default=None, help="End date YYYY-MM-DD (default: today)")
     parser.add_argument("--fast", type=int, default=50, help="Fast EMA period")
     parser.add_argument("--slow", type=int, default=200, help="Slow EMA period")
     parser.add_argument("--cost", type=float, default=0.1, help="Cost per trade side, in percent")
     args, _ = parser.parse_known_args()  # ignore extra args added by jupyter/colab
+
+    if args.ticker is None:
+        args.ticker = ask_ticker()
 
     close = load_prices(args.ticker, args.start, args.end)
     df = run_strategy(close, args.fast, args.slow, args.cost)

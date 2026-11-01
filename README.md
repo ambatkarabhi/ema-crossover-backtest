@@ -44,7 +44,9 @@ pip install -r requirements.txt
 python backtest.py
 ```
 
-Some other examples:
+It will ask for a ticker. For NSE stocks just type the symbol (e.g. `TMPV` or `RELIANCE`) and `.NS` is added automatically. Press Enter to use the Nifty 50.
+
+You can also pass everything directly:
 
 ```bash
 python backtest.py --ticker RELIANCE.NS
