@@ -54,6 +54,15 @@ python backtest.py --fast 20 --slow 100
 
 The charts and CSV files (summary and list of trades) are saved in the `results` folder.
 
+To run it in Google Colab, use this in a cell:
+
+```
+!git clone https://github.com/ambatkarabhi/ema-crossover-backtest.git
+%cd ema-crossover-backtest
+!pip install -q -r requirements.txt
+!python backtest.py
+```
+
 ## Files
 
 - `backtest.py` - downloads the data, runs the strategy, calculates the metrics and makes the charts

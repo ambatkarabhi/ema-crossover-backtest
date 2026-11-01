@@ -145,7 +145,7 @@ def main() -> None:
     parser.add_argument("--fast", type=int, default=50, help="Fast EMA period")
     parser.add_argument("--slow", type=int, default=200, help="Slow EMA period")
     parser.add_argument("--cost", type=float, default=0.1, help="Cost per trade side, in percent")
-    args = parser.parse_args()
+    args, _ = parser.parse_known_args()  # ignore extra args added by jupyter/colab
 
     close = load_prices(args.ticker, args.start, args.end)
     df = run_strategy(close, args.fast, args.slow, args.cost)
